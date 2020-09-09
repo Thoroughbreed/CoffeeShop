@@ -53,7 +53,7 @@
                     <ComboBox Text="{Binding OriginCountry}" x:Name="edtCntry" />
                     <CheckBox IsChecked="{Binding InStock}" x:Name="edtInStock">På lager?</CheckBox>
                     <TextBox Text="{Binding AmountInStock}" x:Name="edtAmount" />
-                    <TextBlock Text="{Binding CoffeeID}" Name="edtCID" />
+                    <TextBlock Text="{Binding CoffeeID, Mode=TwoWay}" x:Name="edtCID" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1" Name="UserPanel2">
                     <TextBlock x:Name="UserExtraDesc" Text="{Binding ExtraDescription}" TextWrapping="Wrap" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,5,0" />

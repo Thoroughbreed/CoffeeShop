@@ -146,6 +146,8 @@ namespace CoffeeShop
             edtCID.Text = "";
             AdminExtraDesc.Text = "[Ekstra beskrivelse]";
             CoffeeImage.Source = null;
+
+            CoffeeList_SelectionChanged(sender, null); ;
         }
     }
 }
