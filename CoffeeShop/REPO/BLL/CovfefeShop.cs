@@ -14,32 +14,53 @@ namespace CoffeeShop.REPO.BLL
         {
             LoadCoffees();
         }
+
+        /// <summary>
+        /// Delete coffee from DB
+        /// </summary>
         public void DeleteCoffee(Coffee coffee)
         {
             CoffeeList.Remove(CoffeeList.Find(s => s.CoffeeID == coffee.CoffeeID));
         }
 
+
+        /// <summary>
+        /// Serves a coffee to customer (mockup/proof of concept)
+        /// </summary>
         public void GetACoffee(Coffee coffee)
         {
             coffee.AmountInStock--;
+            if (coffee.AmountInStock == 0) coffee.InStock = false;
          }
 
+        /// <summary>
+        /// Returns a specific coffee object from ID
+        /// </summary>
         public Coffee GetCofeeByID(int id)
         {
             return CoffeeList.Find(s => s.CoffeeID == id);
         }
 
+        /// <summary>
+        /// Returns a list of coffee (from private list)
+        /// </summary>
         public List<Coffee> GetCoffees()
         {
             return CoffeeList;
         }
 
+        /// <summary>
+        /// Finds image in DB according to the ImageID in the coffee object
+        /// </summary>
         public string GetImages(int id)
         {
             ImageEnum _ = Images.Find(s => s.ImageID == id);
             return _.ImageString;
         }
 
+        /// <summary>
+        /// Was hardcoded demo data, now loads from datafile/CSV
+        /// </summary>
         private void LoadCoffees()
         {
             #region Hardcoded demo data
@@ -68,22 +89,31 @@ namespace CoffeeShop.REPO.BLL
             Images = FileLogger.ReadFromImage();
         }
 
+        /// <summary>
+        /// Calls the filelogger to save data into datafile/CSV
+        /// </summary>
         public void SaveCoffees()
         {
             FileLogger.SaveShop(CoffeeList);
             FileLogger.SaveImg(Images);
         }
 
+        /// <summary>
+        /// Updates said coffee
+        /// </summary>
         public void UpdateCoffee(Coffee coffee)
         {
             CoffeeList.Remove(CoffeeList.Find(s => s.CoffeeID == coffee.CoffeeID));
             CoffeeList.Add(coffee);
         }
 
+        /// <summary>
+        ///  Creates a new coffee from application.
+        /// </summary>
         public void CreateCoffee(string cName, string desc, Country ct, int price, bool stock, int amount, bool superior, string eDesc)
         {
-            if (superior) CoffeeList.Add(new SuperiorCoffee(eDesc, cName, desc, ct, price, 3, stock, amount));
-            else CoffeeList.Add(new Coffee(cName, desc, ct, price, 3, stock, amount));
+            if (superior) CoffeeList.Add(new SuperiorCoffee(eDesc, cName, desc, ct, price, stock, amount));
+            else CoffeeList.Add(new Coffee(cName, desc, ct, price, stock, amount));
         }
     }
 }

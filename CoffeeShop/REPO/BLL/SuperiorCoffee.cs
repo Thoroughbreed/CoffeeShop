@@ -8,7 +8,7 @@ namespace CoffeeShop.REPO.BLL
     {
         public string ExtraDescription { get; set; }
 
-        public SuperiorCoffee(string eDesc, string cName, string desc, Country ct, int price, int imgID, bool inStock, int amount) : base(cName, desc, ct, price, imgID, inStock, amount)
+        public SuperiorCoffee(string eDesc, string cName, string desc, Country ct, int price, bool inStock, int amount) : base(cName, desc, ct, price, inStock, amount)
         {
             ExtraDescription = eDesc;
         }

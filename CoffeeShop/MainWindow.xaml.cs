@@ -25,18 +25,24 @@ namespace CoffeeShop
 
         public MainWindow()
         {
-            this.Language = XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag);
+            this.Language = XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag); //Sets locale to da-DK (system specific)
             _shop = new CovfefeShop();
             InitializeComponent();
             CoffeeList.ItemsSource = _shop.GetCoffees();
             edtCntry.ItemsSource = Enum.GetValues(typeof(Country));
         }
 
+        /// <summary>
+        /// Sets image source from the ID of the object
+        /// </summary>
         private void GetImages(int id)
         {
             CoffeeImage.Source = new BitmapImage(new Uri(_shop.GetImages(id), UriKind.Relative));
         }
 
+        /// <summary>
+        /// Changes image when selection changes
+        /// </summary>
         private void CoffeeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -49,6 +55,9 @@ namespace CoffeeShop
             }
         }
 
+        /// <summary>
+        /// Simulates login to Admin-mode. password not yet set - only as proof of concept
+        /// </summary>
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (_admin)
@@ -84,6 +93,9 @@ namespace CoffeeShop
             if (CoffeeList.SelectedIndex == -1) BtnCreate_Click(sender, e);
         }
 
+        /// <summary>
+        /// Saves coffee when creating a new one
+        /// </summary>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -101,6 +113,9 @@ namespace CoffeeShop
             
         }
 
+        /// <summary>
+        /// Deletes coffee if user answers "yes" in prompt
+        /// </summary>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -121,23 +136,37 @@ namespace CoffeeShop
             }
         }
 
+        /// <summary>
+        /// "Drinks" a coffee. If !InStock then user is told that they cannot do that Dave
+        /// </summary>
         private void BtnDrink_Click(object sender, RoutedEventArgs e)
         {
             int i = CoffeeList.SelectedIndex;
             Coffee _ = _shop.GetCofeeByID(Convert.ToInt32(edtCID.Text));
-            MessageBox.Show("Velbekomme", "Hello World.", MessageBoxButton.OK, MessageBoxImage.Information);
-            CoffeeList.ItemsSource = null;
-            _shop.GetACoffee(_);
-            CoffeeList.ItemsSource = _shop.GetCoffees();
-            CoffeeList.SelectedIndex = i;
-            CoffeeList_SelectionChanged(sender,  null);;
+            if (_.InStock)
+            {
+                MessageBox.Show("Velbekomme", "Hello World.", MessageBoxButton.OK, MessageBoxImage.Information);
+                CoffeeList.ItemsSource = null;
+                _shop.GetACoffee(_);
+                CoffeeList.ItemsSource = _shop.GetCoffees();
+                CoffeeList.SelectedIndex = i;
+                CoffeeList_SelectionChanged(sender, null);
+            }
+            else if (!_.InStock) MessageBox.Show("Der er desværre ingen kaffe på lager.\nPrøv igen i morgen. Vi beklager", "I'm sorry Dave. I cannot let you do that", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        /// <summary>
+        /// Calls the "Save" method when exiting application
+        /// </summary>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _shop.SaveCoffees();
         }
 
+        /// <summary>
+        /// Creates a new cuppa, prepares fields. 
+        /// Is called when logging in if no item is selected
+        /// </summary>
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
             AdminCName.Text = "[Indtast kaffens navn]";

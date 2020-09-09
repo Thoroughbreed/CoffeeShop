@@ -20,7 +20,10 @@ namespace CoffeeShop.REPO.BLL
         public DateTime FirstAddedToStock { get; set; }
         public int ImageID { get; set; }
 
-        public Coffee(string cName, string desc, Country ct, int price, int imgID, bool inStock, int amount)
+        /// <summary>
+        /// CTOR for new coffee types (application created)
+        /// </summary>
+        public Coffee(string cName, string desc, Country ct, int price, bool inStock, int amount)
         {
             Random CID = new Random();
             CoffeeID = CID.Next(1000, 9999);
@@ -31,9 +34,12 @@ namespace CoffeeShop.REPO.BLL
             InStock = inStock;
             AmountInStock = amount;
             FirstAddedToStock = DateTime.Now;
-            ImageID = imgID;
+            ImageID = 3; // Image is hardcoded to a "404-Coffee not found".
         }
 
+        /// <summary>
+        /// CTOR for new coffee types (persistent data)
+        /// </summary>
         public Coffee(string am, string cID, string cName, string desc, string fAdded, string iID, string inStock, string cntr, string price)
         {
             CoffeeID = Convert.ToInt32(cID);

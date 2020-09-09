@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CoffeeShop.REPO.BLL
 {
-    enum Country
+    enum Country // Enumeration of countries
     {
         Brazil,
         Ecuador,
