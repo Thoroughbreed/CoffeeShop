@@ -1,12 +1,76 @@
-﻿<Window x:Class="CoffeeShop.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoffeeShop"
+        xmlns:BLL="clr-namespace:CoffeeShop.REPO.BLL" xmlns:System="clr-namespace:System;assembly=System.Runtime" x:Class="CoffeeShop.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="Covfefe Sh0p" Height="450" Width="800"
+        Closing="Window_Closing">
+    <Grid DataContext="{Binding SelectedValue, ElementName=CoffeeList, Mode=TwoWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" FontFamily="Fixedsys"><Run Text="Take me to the Covfefe shøp"/></TextBlock>
+        <Border Grid.Row="1" Grid.Column="0" Background="SaddleBrown">
+            <Label Content="Covfefe Types" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="AntiqueWhite" FontSize="20"/>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1" Background="SaddleBrown" Grid.ColumnSpan="2">
+            <Grid>
+                <TextBlock x:Name="UserCName" Margin="10,0,0,0"  Text="{Binding CoffeeName}" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="AntiqueWhite" FontSize="17" />
+                <TextBox x:Name="AdminCName" Text="{Binding CoffeeName}" Visibility="Hidden" />
+            </Grid>
+        </Border>
+        
+        <Border Grid.Row="1" Grid.Column="3" Background="SaddleBrown" />
+        <ListBox x:Name="CoffeeList" DisplayMemberPath="CoffeeName" SelectionChanged="CoffeeList_SelectionChanged" Grid.Row="2" Grid.Column="0" BorderBrush="BlanchedAlmond"/>
+        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="BlanchedAlmond" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="UserPanel" Orientation="Vertical" Grid.Column="0" HorizontalAlignment="Left" Margin="20" Visibility="Visible">
+                    <TextBlock Text="{Binding Price, StringFormat=Pris: \{0:C\}}" />
+                    <TextBlock Text="{Binding Description, StringFormat=Beskrivelse:&#xA;  \{0\}}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding OriginCountry, StringFormat=Oprindelsesland:&#xA;  \{0\}}" />
+                    <TextBlock Text="{Binding AmountInStock, StringFormat=Antal på lager: \{0\}}" />
+                    <TextBlock Text="{Binding ImageID}" Visibility="Hidden" x:Name="CheatCode" />
+                </StackPanel>
+                <StackPanel x:Name="AdminPanel" Orientation="Vertical" Grid.Column="0" HorizontalAlignment="Left" Margin="20" Visibility="Hidden">
+                    <TextBox Text="{Binding Price}" x:Name="edtPrice" />
+                    <TextBox Text="{Binding Description}" x:Name="edtDesc" MinLines="5" TextWrapping="Wrap" MaxLines="8"/>
+                    <ComboBox Text="{Binding OriginCountry}" x:Name="edtCntry" />
+                    <CheckBox IsChecked="{Binding InStock}" x:Name="edtInStock">På lager?</CheckBox>
+                    <TextBox Text="{Binding AmountInStock}" x:Name="edtAmount" />
+                    <TextBlock Text="{Binding CoffeeID}" Name="edtCID" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="1" Name="UserPanel2">
+                    <TextBlock x:Name="UserExtraDesc" Text="{Binding ExtraDescription}" TextWrapping="Wrap" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,5,0" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="1" Visibility="Hidden" Name="AdminPanel2">
+                    <CheckBox Grid.Column="1" x:Name="Superior">Superior Coffee?</CheckBox>
+                    <TextBox x:Name="AdminExtraDesc" Text="{Binding ExtraDescription}" TextWrapping="Wrap" Grid.Column="1" MinLines="5" MaxLines="15"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" Grid.Column="3" BorderBrush="BlanchedAlmond" BorderThickness="1">
+            <Image x:Name="CoffeeImage" Grid.Row="2" Grid.Column="3" />
+        </Border>
+        <Button Grid.Column="0" Grid.Row="3" x:Name="btnLogin" Click="BtnLogin_Click" Content="Log ind"/>
+        <Button Grid.Column="1" Grid.Row="3" x:Name="btnDrink" Click="BtnDrink_Click" Content="Køb kaffe"/>
+        <Button Grid.Column="1" Grid.Row="3" x:Name="btnCreate" Click="BtnCreate_Click" Content="Opret ny" Visibility="Hidden"/>
+        <Button Grid.Column="2" Grid.Row="3" x:Name="btnSave" Click="BtnSave_Click" Visibility="Hidden" Content="Gem kaffe"/>
+        <Button Grid.Column="3" Grid.Row="3" x:Name="btnDelete" Click="BtnDelete_Click" Visibility="Hidden" Content="Slet kaffe"/>
     </Grid>
 </Window>

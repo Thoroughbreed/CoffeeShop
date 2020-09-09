@@ -6,4 +6,34 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\Ecuador.png" />
+    <None Remove="Images\JavaJive.png" />
+    <None Remove="Images\KopiABC.png" />
+    <None Remove="Images\KopiLuwak.png" />
+    <None Remove="Images\NotFound.png" />
+    <None Remove="Images\Vietnam.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Ecuador.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\JavaJive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\KopiABC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\KopiLuwak.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\NotFound.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vietnam.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>
